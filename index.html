@@ -156,3 +156,47 @@
 </form>
 
 <h3 id="result"></h3>
+
+
+<script>
+document.getElementById("form").onsubmit = async function(e) {
+    e.preventDefault();
+
+    const data = {
+        checking_status: document.getElementById("checking_status").value,
+        duration: Number(document.getElementById("duration").value),
+        credit_history: document.getElementById("credit_history").value,
+        purpose: document.getElementById("purpose").value,
+        credit_amount: Number(document.getElementById("credit_amount").value),
+        savings_status: document.getElementById("savings_status").value,
+        employment: document.getElementById("employment").value,
+        installment_commitment: Number(document.getElementById("installment_commitment").value),
+        personal_status: document.getElementById("personal_status").value,
+        other_parties: document.getElementById("other_parties").value,
+        residence_since: Number(document.getElementById("residence_since").value),
+        property_magnitude: document.getElementById("property_magnitude").value,
+        age: Number(document.getElementById("age").value),
+        other_payment_plans: document.getElementById("other_payment_plans").value,
+        housing: document.getElementById("housing").value,
+        existing_credits: Number(document.getElementById("existing_credits").value),
+        job: document.getElementById("job").value,
+        num_dependents: Number(document.getElementById("num_dependents").value),
+        own_telephone: document.getElementById("own_telephone").value,
+        foreign_worker: document.getElementById("foreign_worker").value
+    };
+
+    const response = await fetch("https://credit-risk-ml-pipeline.onrender.com", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+    });
+
+    const result = await response.json();
+
+    document.getElementById("result").innerText =
+        "Prediction: " + result.prediction +
+        " | Risk: " + result.risk_probability;
+};
+</script>
