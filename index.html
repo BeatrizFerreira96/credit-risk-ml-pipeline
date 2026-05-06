@@ -1,0 +1,158 @@
+<h2>Credit Risk Prediction</h2>
+
+<form id="form">
+
+<!-- CHECKING -->
+<label>Checking Account:</label>
+<select id="checking_status">
+  <option value="A11">< 0€</option>
+  <option value="A12">0–200€</option>
+  <option value="A13">> 200€</option>
+  <option value="A14">No account</option>
+</select><br>
+
+<!-- DURATION -->
+<label>Duration (months):</label>
+<input type="number" id="duration"><br>
+
+<!-- CREDIT HISTORY -->
+<label>Credit History:</label>
+<select id="credit_history">
+  <option value="A30">No credits</option>
+  <option value="A31">All paid back</option>
+  <option value="A32">Existing paid</option>
+  <option value="A33">Delay in past</option>
+  <option value="A34">Critical account</option>
+</select><br>
+
+<!-- PURPOSE -->
+<label>Purpose:</label>
+<select id="purpose">
+  <option value="A40">Car (new)</option>
+  <option value="A41">Car (used)</option>
+  <option value="A42">Furniture</option>
+  <option value="A43">Radio/TV</option>
+  <option value="A44">Appliances</option>
+  <option value="A45">Repairs</option>
+  <option value="A46">Education</option>
+  <option value="A47">Vacation</option>
+  <option value="A48">Retraining</option>
+  <option value="A49">Business</option>
+  <option value="A410">Other</option>
+</select><br>
+
+<!-- CREDIT AMOUNT -->
+<label>Credit Amount:</label>
+<input type="number" id="credit_amount"><br>
+
+<!-- SAVINGS -->
+<label>Savings:</label>
+<select id="savings_status">
+  <option value="A61">< 100€</option>
+  <option value="A62">100–500€</option>
+  <option value="A63">500–1000€</option>
+  <option value="A64">> 1000€</option>
+  <option value="A65">No savings</option>
+</select><br>
+
+<!-- EMPLOYMENT -->
+<label>Employment:</label>
+<select id="employment">
+  <option value="A71">Unemployed</option>
+  <option value="A72">< 1 year</option>
+  <option value="A73">1–4 years</option>
+  <option value="A74">4–7 years</option>
+  <option value="A75">> 7 years</option>
+</select><br>
+
+<!-- INSTALLMENT -->
+<label>Installment Commitment:</label>
+<input type="number" id="installment_commitment"><br>
+
+<!-- PERSONAL STATUS -->
+<label>Personal Status:</label>
+<select id="personal_status">
+  <option value="A91">Male divorced</option>
+  <option value="A92">Female divorced</option>
+  <option value="A93">Male single</option>
+  <option value="A94">Male married</option>
+  <option value="A95">Female single</option>
+</select><br>
+
+<!-- OTHER PARTIES -->
+<label>Other Parties:</label>
+<select id="other_parties">
+  <option value="A101">None</option>
+  <option value="A102">Co-applicant</option>
+  <option value="A103">Guarantor</option>
+</select><br>
+
+<!-- RESIDENCE -->
+<label>Residence Since:</label>
+<input type="number" id="residence_since"><br>
+
+<!-- PROPERTY -->
+<label>Property:</label>
+<select id="property_magnitude">
+  <option value="A121">Real estate</option>
+  <option value="A122">Savings agreement</option>
+  <option value="A123">Car</option>
+  <option value="A124">Unknown</option>
+</select><br>
+
+<!-- AGE -->
+<label>Age:</label>
+<input type="number" id="age"><br>
+
+<!-- OTHER PAYMENT -->
+<label>Other Payment Plans:</label>
+<select id="other_payment_plans">
+  <option value="A141">Bank</option>
+  <option value="A142">Stores</option>
+  <option value="A143">None</option>
+</select><br>
+
+<!-- HOUSING -->
+<label>Housing:</label>
+<select id="housing">
+  <option value="A151">Rent</option>
+  <option value="A152">Own</option>
+  <option value="A153">Free</option>
+</select><br>
+
+<!-- EXISTING CREDITS -->
+<label>Existing Credits:</label>
+<input type="number" id="existing_credits"><br>
+
+<!-- JOB -->
+<label>Job:</label>
+<select id="job">
+  <option value="A171">Unskilled non-resident</option>
+  <option value="A172">Unskilled resident</option>
+  <option value="A173">Skilled</option>
+  <option value="A174">Highly skilled</option>
+</select><br>
+
+<!-- DEPENDENTS -->
+<label>Number of Dependents:</label>
+<input type="number" id="num_dependents"><br>
+
+<!-- TELEPHONE -->
+<label>Telephone:</label>
+<select id="own_telephone">
+  <option value="A191">None</option>
+  <option value="A192">Yes</option>
+</select><br>
+
+<!-- FOREIGN WORKER -->
+<label>Foreign Worker:</label>
+<select id="foreign_worker">
+  <option value="A201">Yes</option>
+  <option value="A202">No</option>
+</select><br>
+
+<button type="submit">Predict</button>
+
+</form>
+
+<h3 id="result"></h3>
