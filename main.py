@@ -43,7 +43,9 @@ class Customer(BaseModel):
 
 @app.get("/")
 def root():
-    return FileResponse("index.html")
+    import os
+    print("Serving file from:", os.getcwd())
+    return FileResponse(os.path.join(os.getcwd(), "index.html"))
 
 
 @app.post("/predict")
