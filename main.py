@@ -4,6 +4,8 @@ import pandas as pd
 import joblib
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
+
 
 app = FastAPI()   # ✅ MUST come before decorators
 app.add_middleware(
@@ -41,7 +43,8 @@ class Customer(BaseModel):
 
 @app.get("/")
 def root():
-    return {"message": "Credit Risk ML API"}
+    return FileResponse("index.html")
+
 
 @app.post("/predict")
 def predict(customer: Customer):
