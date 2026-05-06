@@ -5,7 +5,7 @@ import joblib
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
-
+from typing import Optional
 
 app = FastAPI()   # ✅ MUST come before decorators
 app.add_middleware(
@@ -19,7 +19,7 @@ app.add_middleware(
 model = joblib.load("src/model.pkl")
 
 # input schema
-class Customer(BaseModel):
+class InputData(BaseModel):
     checking_status: str
     duration: int
     credit_history: str
@@ -28,18 +28,11 @@ class Customer(BaseModel):
     savings_status: str
     employment: str
     installment_commitment: int
-    personal_status: str
-    other_parties: str
-    residence_since: int
-    property_magnitude: str
     age: int
-    other_payment_plans: str
-    housing: str
     existing_credits: int
-    job: str
-    num_dependents: int
-    own_telephone: str
-    foreign_worker: str
+
+    # optional fields
+    personal_status: Optional[str] = None
 
 @app.get("/")
 def root():
@@ -49,7 +42,7 @@ def root():
 
 
 @app.post("/predict")
-def predict(customer: Customer):
+def predict(customer: InputData):
 
     data = pd.DataFrame([customer.dict()])
 
