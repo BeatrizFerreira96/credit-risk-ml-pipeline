@@ -7,7 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from typing import Optional
 from fastapi.middleware.cors import CORSMiddleware
-
+import shap
 
 app = FastAPI()   # ✅ MUST come before decorators
 app.add_middleware(
@@ -20,6 +20,8 @@ app.add_middleware(
 
 # load model
 model = joblib.load("src/model.pkl")
+explainer = shap.Explainer(model.named_steps["model"])
+
 
 # ✅ Input schema
 class InputData(BaseModel):
@@ -74,14 +76,28 @@ def predict(customer: InputData):
             if col not in data:
                 data[col] = value
 
-        pred = model.predict(data)[0]
-        prob = model.predict_proba(data)[0][1]
+        # preprocess input
+        processed_data = model.named_steps["preprocessing"].transform(data)
 
+        # prediction
+        pred = model.named_steps["model"].predict(processed_data)[0]
+        prob = model.named_steps["model"].predict_proba(processed_data)[0][1]
+
+        shap_values = explainer(processed_data)
+
+        feature_importance = {}
+
+        feature_names = model.named_steps["preprocessing"].get_feature_names_out()
+
+        for name, value in zip(feature_names, shap_values.values[0]):
+            feature_importance[name] = round(float(value), 3)
+        
         return {
-            "prediction": "high risk" if pred == 1 else "low risk",
-            "risk_probability": round(float(prob), 3),
-            "confidence": round(float(prob if pred == 1 else 1 - prob), 3)
-        }
+    "prediction": "high risk" if pred == 1 else "low risk",
+    "risk_probability": round(float(prob), 3),
+    "confidence": round(float(prob if pred == 1 else 1 - prob), 3),
+    "shap_values": feature_importance
+    }
 
     except Exception as e:
         return {"error": str(e)}
