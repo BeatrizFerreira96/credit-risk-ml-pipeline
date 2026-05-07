@@ -18,7 +18,7 @@ column_names = [
 
 
 #load data
-df = pd.read_csv("../data/raw/credit_data.csv", sep="\s+", header=None)
+df = pd.read_csv("data/raw/credit_data.csv", sep="\s+", header=None)
 df.columns = column_names
 
 # Features / target
@@ -63,6 +63,6 @@ X_train, X_test, y_train, y_test = train_test_split(
 pipeline.fit(X_train, y_train)
 
 # Save entire pipeline
-joblib.dump(pipeline, "model.pkl")
+joblib.dump(pipeline, "src/model.pkl")
 
 print("Pipeline trained and saved!")
