@@ -20,7 +20,7 @@ app.add_middleware(
 
 # load model
 model = joblib.load("src/model.pkl")
-explainer = shap.Explainer(model.named_steps["model"])
+explainer = shap.TreeExplainer(model.named_steps["model"])
 
 
 # ✅ Input schema
