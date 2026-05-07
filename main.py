@@ -21,7 +21,7 @@ app.add_middleware(
 # load model
 model = joblib.load("src/model.pkl")
 print(model.named_steps)
-explainer = shap.TreeExplainer(model.named_steps["model"])
+explainer = shap.TreeExplainer(model.named_steps["classifier"])
 
 
 # ✅ Input schema
@@ -78,18 +78,17 @@ def predict(customer: InputData):
                 data[col] = value
 
         # preprocess input
-        processed_data = model.named_steps["preprocessing"].transform(data)
+        processed_data = model.named_steps["preprocessor"].transform(data)
 
-        # prediction
-        pred = model.named_steps["model"].predict(processed_data)[0]
-        prob = model.named_steps["model"].predict_proba(processed_data)[0][1]
+        pred = model.named_steps["classifier"].predict(processed_data)[0]
+
+        prob = model.named_steps["classifier"].predict_proba(processed_data)[0][1]
 
         shap_values = explainer(processed_data)
 
         feature_importance = {}
 
-        feature_names = model.named_steps["preprocessing"].get_feature_names_out()
-
+        feature_names = model.named_steps["preprocessor"].get_feature_names_out()
         for name, value in zip(feature_names, shap_values.values[0]):
             feature_importance[name] = round(float(value), 3)
         
