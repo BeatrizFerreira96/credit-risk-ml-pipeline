@@ -15,6 +15,8 @@ column_names = [
     "job", "num_dependents", "own_telephone", "foreign_worker",
     "target"
 ]
+
+
 #load data
 df = pd.read_csv("../data/raw/credit_data.csv", sep="\s+", header=None)
 df.columns = column_names
