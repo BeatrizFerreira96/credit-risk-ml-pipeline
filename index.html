@@ -289,17 +289,56 @@ document.getElementById("form").onsubmit = async function(e) {
         document.getElementById("explanations");
 
     const featureNames = {
-        "num__duration": "Loan Duration",
-        "num__credit_amount": "Credit Amount",
-        "num__installment_commitment": "Installment Commitment",
-        "num__age": "Age",
-        "num__existing_credits": "Existing Credits",
-        "cat__checking_status_A11": "Low Checking Account Balance",
-        "cat__savings_status_A61": "Low Savings",
-        "cat__employment_A72": "Short Employment",
-        "cat__credit_history_A34": "Good Credit History",
-        "cat__purpose_A41": "Car Loan"
-    };
+
+    // NUMERICAL
+    "num__duration": "Loan Duration",
+    "num__credit_amount": "Credit Amount",
+    "num__installment_commitment": "Installment Commitment",
+    "num__residence_since": "Years at Current Residence",
+    "num__age": "Age",
+    "num__existing_credits": "Existing Credits",
+    "num__num_dependents": "Number of Dependents",
+
+    // CHECKING STATUS
+    "cat__checking_status_A11": "Low Checking Account Balance",
+    "cat__checking_status_A12": "Moderate Checking Balance",
+    "cat__checking_status_A13": "High Checking Balance",
+    "cat__checking_status_A14": "No Checking Account",
+
+    // CREDIT HISTORY
+    "cat__credit_history_A30": "No Credit History",
+    "cat__credit_history_A31": "All Credits Paid",
+    "cat__credit_history_A32": "Existing Credits Paid",
+    "cat__credit_history_A33": "Past Payment Delays",
+    "cat__credit_history_A34": "Critical Credit History",
+
+    // PURPOSE
+    "cat__purpose_A40": "New Car Loan",
+    "cat__purpose_A41": "Used Car Loan",
+    "cat__purpose_A42": "Furniture Purchase",
+    "cat__purpose_A43": "Electronics Purchase",
+    "cat__purpose_A49": "Business Loan",
+
+    // SAVINGS
+    "cat__savings_status_A61": "Low Savings",
+    "cat__savings_status_A62": "Moderate Savings",
+    "cat__savings_status_A63": "Good Savings",
+    "cat__savings_status_A64": "High Savings",
+    "cat__savings_status_A65": "No Savings",
+
+    // EMPLOYMENT
+    "cat__employment_A71": "Unemployed",
+    "cat__employment_A72": "Short Employment",
+    "cat__employment_A73": "1-4 Years Employment",
+    "cat__employment_A74": "4-7 Years Employment",
+    "cat__employment_A75": "Long-Term Employment",
+
+    // PROPERTY
+    "cat__property_magnitude_A121": "Real Estate Assets",
+    "cat__property_magnitude_A122": "Savings Insurance",
+    "cat__property_magnitude_A123": "Car Ownership",
+    "cat__property_magnitude_A124": "No Major Property"
+};
 
     const sortedFeatures =
         Object.entries(result.shap_values)
