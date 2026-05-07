@@ -287,7 +287,42 @@ document.getElementById("form").onsubmit = async function(e) {
 
     const explanationsDiv =
         document.getElementById("explanations");
+    const allowedFeatures = [
+    "num__duration",
+    "num__credit_amount",
+    "num__installment_commitment",
+    "num__age",
+    "num__existing_credits",
 
+    "cat__checking_status_A11",
+    "cat__checking_status_A12",
+    "cat__checking_status_A13",
+    "cat__checking_status_A14",
+
+    "cat__credit_history_A30",
+    "cat__credit_history_A31",
+    "cat__credit_history_A32",
+    "cat__credit_history_A33",
+    "cat__credit_history_A34",
+
+    "cat__purpose_A40",
+    "cat__purpose_A41",
+    "cat__purpose_A42",
+    "cat__purpose_A43",
+    "cat__purpose_A49",
+
+    "cat__savings_status_A61",
+    "cat__savings_status_A62",
+    "cat__savings_status_A63",
+    "cat__savings_status_A64",
+    "cat__savings_status_A65",
+
+    "cat__employment_A71",
+    "cat__employment_A72",
+    "cat__employment_A73",
+    "cat__employment_A74",
+    "cat__employment_A75"
+];
     const featureNames = {
 
     // NUMERICAL
@@ -342,6 +377,7 @@ document.getElementById("form").onsubmit = async function(e) {
 
     const sortedFeatures =
         Object.entries(result.shap_values)
+.filter(([feature]) => allowedFeatures.includes(feature))
         .sort((a, b) => Math.abs(b[1]) - Math.abs(a[1]))
         .slice(0, 5);
 
