@@ -347,13 +347,6 @@ document.getElementById("form").onsubmit = async function(e) {
     "cat__credit_history_A33": "Past Payment Delays",
     "cat__credit_history_A34": "Critical Credit History",
 
-    // PURPOSE
-    "cat__purpose_A40": "New Car Loan",
-    "cat__purpose_A41": "Used Car Loan",
-    "cat__purpose_A42": "Furniture Purchase",
-    "cat__purpose_A43": "Electronics Purchase",
-    "cat__purpose_A49": "Business Loan",
-
     // SAVINGS
     "cat__savings_status_A61": "Low Savings",
     "cat__savings_status_A62": "Moderate Savings",
@@ -412,6 +405,54 @@ document.getElementById("form").onsubmit = async function(e) {
     `;
 
     explanationsDiv.innerHTML = html;
+    // SHAP BAR CHART
+
+const labels = sortedFeatures.map(
+    ([feature]) => featureNames[feature] || feature
+);
+
+const values = sortedFeatures.map(
+    ([_, value]) => value
+);
+
+// destroy old chart if exists
+if (window.shapChartInstance) {
+    window.shapChartInstance.destroy();
+}
+
+const ctx = document
+    .getElementById("shapChart")
+    .getContext("2d");
+
+window.shapChartInstance = new Chart(ctx, {
+    type: "bar",
+    data: {
+        labels: labels,
+        datasets: [{
+            label: "SHAP Impact",
+            data: values,
+            backgroundColor: values.map(v =>
+                v > 0
+                ? "rgba(220,53,69,0.7)"
+                : "rgba(40,167,69,0.7)"
+            ),
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: {
+                display: false
+            }
+        },
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
 };
 
 </script>
