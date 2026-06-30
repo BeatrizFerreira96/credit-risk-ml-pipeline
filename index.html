@@ -234,6 +234,26 @@ button:hover {
 
 <div id="result" class="result-box"></div>
 
+<div id="risk-container" style="display:none; margin-top:20px;">
+    <h3>Risk Score</h3>
+
+    <div style="
+        width:100%;
+        background:#e0e0e0;
+        border-radius:10px;
+        overflow:hidden;
+        height:25px;
+    ">
+        <div id="risk-bar" style="
+            width:0%;
+            height:100%;
+            transition:0.5s;
+        "></div>
+    </div>
+
+    <p id="risk-text"></p>
+</div>
+
 <div id="explanations"></div>
 <canvas id="shapChart"></canvas>
 </div>
@@ -282,7 +302,38 @@ document.getElementById("form").onsubmit = async function(e) {
     resultDiv.innerText =
         "Prediction: " + result.prediction +
         " | Risk: " + result.risk_probability;
+    
+    const riskContainer =
+        document.getElementById("risk-container");
 
+    const riskBar =
+        document.getElementById("risk-bar");
+
+    const riskText =
+        document.getElementById("risk-text");
+
+    const riskPercent =
+        result.risk_probability * 100;
+
+    riskContainer.style.display = "block";
+
+    riskBar.style.width = riskPercent + "%";
+
+    if (riskPercent < 30) {
+
+        riskBar.style.background = "#4CAF50";
+
+    } else if (riskPercent < 60) {
+
+     riskBar.style.background = "#FF9800";
+
+    } else {
+
+        riskBar.style.background = "#F44336";
+    }
+
+    riskText.innerText =
+        riskPercent.toFixed(1) + "% Risk Probability";
     // SHAP DISPLAY
 
     const explanationsDiv =
@@ -420,6 +471,7 @@ const ctx = document
 
 window.shapChartInstance = new Chart(ctx, {
     type: "bar",
+    indexAxis: "y",
     data: {
         labels: labels,
         datasets: [{
