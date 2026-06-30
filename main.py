@@ -91,10 +91,12 @@ def predict(customer: InputData):
         for name, value in zip(feature_names, shap_values.values[0]):
             feature_importance[name] = round(float(value), 3)
         
+        confidence = max(prob)
         return {
     "prediction": "high risk" if pred == 1 else "low risk",
     "risk_probability": round(float(prob), 3),
     "confidence": round(float(prob if pred == 1 else 1 - prob), 3),
+    "confidence": float(confidence),
     "shap_values": feature_importance
     }
 

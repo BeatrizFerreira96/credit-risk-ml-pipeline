@@ -325,6 +325,10 @@ button:hover {
 <div id="recommendationBox"></div>
 </div>
 
+<footer>
+Built by Beatriz Ferreira | FastAPI • Scikit-Learn • SHAP
+</footer>
+
 <script>
 
 document.getElementById("form").onsubmit = async function(e) {
@@ -380,13 +384,23 @@ document.getElementById("form").onsubmit = async function(e) {
             : "✅ Low Risk Applicant";
 
 
-    const confidence =
-        result.prediction === "high risk"
-        ? result.risk_probability
-        : result.confidence;
+    let confidenceLabel;
 
-    document.getElementById("confidenceText").innerText =
-    `Model Confidence: ${(confidence*100).toFixed(1)}%`;
+if (result.risk_probability > 0.8 || result.risk_probability < 0.2)
+{
+    confidenceLabel = "High";
+}
+else if (result.risk_probability > 0.65 || result.risk_probability < 0.35)
+{
+    confidenceLabel = "Moderate";
+}
+else
+{
+    confidenceLabel = "Low";
+}
+
+document.getElementById("confidenceText").innerText =
+    `Model Confidence: ${(result.confidence * 100).toFixed(1)}%`;
 
     const riskContainer =
         document.getElementById("risk-container");
@@ -644,7 +658,7 @@ window.shapChartInstance = new Chart(ctx, {
 
             title: {
                 display: true,
-                text: "Key Factors Influencing Credit Risk",
+                text: "Top 5 Features Driving This Prediction",
                 font: {
                     size: 18
                 }
