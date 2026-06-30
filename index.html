@@ -300,9 +300,19 @@ document.getElementById("form").onsubmit = async function(e) {
             : "result-low");
 
     resultDiv.innerText =
-        "Prediction: " + result.prediction +
-        " | Risk: " + result.risk_probability;
-    
+        result.prediction === "high risk"
+            ? "⚠ High Risk Applicant"
+            : "✅ Low Risk Applicant";
+
+
+    const confidence =
+        result.prediction === "high risk"
+        ? result.risk_probability
+        : result.confidence;
+
+    document.getElementById("confidenceText").innerText =
+    `Model Confidence: ${(confidence*100).toFixed(1)}%`;
+
     const riskContainer =
         document.getElementById("risk-container");
 
@@ -319,23 +329,33 @@ document.getElementById("form").onsubmit = async function(e) {
 
     riskBar.style.width = riskPercent + "%";
 
-    if (riskPercent < 30) {
+    let riskColor;
 
-        riskBar.style.background = "#4CAF50";
-
-    } else if (riskPercent < 60) {
-
-     riskBar.style.background = "#FF9800";
-
-    } else {
-
-        riskBar.style.background = "#F44336";
-    }
+    if (result.risk_probability < 0.3)
+        riskColor = "#4CAF50";
+    else if (result.risk_probability < 0.6)
+        riskColor = "#ff9800";
+    else
+        riskColor = "#f44336";
 
     riskText.innerText =
         riskPercent.toFixed(1) + "% Risk Probability";
     // SHAP DISPLAY
 
+    let recommendation;
+
+    if(result.risk_probability > 0.6)
+    {
+        recommendation =
+            "Review income stability and savings before approval.";
+    }
+    else
+    {
+         recommendation =
+        "Applicant appears suitable for standard approval.";
+    }
+    
+    
     const explanationsDiv =
         document.getElementById("explanations");
     const allowedFeatures = [
