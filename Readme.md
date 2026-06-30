@@ -193,15 +193,19 @@ credit-risk-ml-pipeline/
 
 ---
 
-## Example Dashboard
+## Application Screenshots
 
-### Prediction Interface
+### High Risk Prediction
+
+![High Risk](screenshots/high-risk.png)
+
+### Low Risk Prediction
+
+![Low Risk](screenshots/low-risk.png)
+
+### Explainable AI Dashboard
 
 ![Dashboard](screenshots/dashboard.png)
-
-### SHAP Explainability
-
-![SHAP](screenshots/shap.png)
 
 ---
 
