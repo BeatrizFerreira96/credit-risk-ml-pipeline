@@ -65,13 +65,7 @@ pipeline.fit(X_train, y_train)
 # Save entire pipeline
 joblib.dump(pipeline, "src/model.pkl")
 
-import pandas as pd
-from sklearn.model_selection import train_test_split
-from sklearn.compose import ColumnTransformer
-from sklearn.preprocessing import OneHotEncoder
-from sklearn.pipeline import Pipeline
-from xgboost import XGBClassifier
-import joblib
+
 
 # Column names
 column_names = [

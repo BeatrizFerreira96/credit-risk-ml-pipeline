@@ -43,7 +43,7 @@ class InputData(BaseModel):
 def root():
     import os
     print("Serving file from:", os.getcwd())
-    return FileResponse(os.path.join(os.getcwd(), "index.html"))
+    return FileResponse("templates/index.html")
 
 
 @app.post("/predict")
