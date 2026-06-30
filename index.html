@@ -597,29 +597,7 @@ html += `
 </div>
 `;
 
-    for (const [feature, value] of sortedFeatures) {
-
-        const cleanName =
-            featureNames[feature] || feature;
-
-        const impact =
-            value > 0
-            ? "⬆ Increased Risk"
-            : "⬇ Reduced Risk";
-
-        html += `
-            <li>
-                <strong>${cleanName}</strong>:
-                ${impact}
-                (${value.toFixed(3)})
-            </li>
-        `;
-    }
-
-    html += `
-            </ul>
-        </div>
-    `;
+    
 
     explanationsDiv.innerHTML = html;
     // SHAP BAR CHART
