@@ -264,9 +264,8 @@ button:hover {
     <p id="risk-text"></p>
 </div>
 
-<div id="loading" style="display:none; text-align:center; margin-top:20px;">
-    ⏳ Calculating risk assessment...
-</div>
+
+<p id="confidenceText"></p>
 
 <div id="explanations"></div>
 <canvas id="shapChart"></canvas>
@@ -281,7 +280,9 @@ document.getElementById("form").onsubmit = async function(e) {
     e.preventDefault();
     const button = document.getElementById("predictBtn");
     const loadingDiv = document.getElementById("loading");
-
+    loadingDiv.style.display = "block";
+    button.disabled = true;
+    button.innerText = "Predicting...";
    
     const data = {
         checking_status: document.getElementById("checking_status").value,
@@ -347,17 +348,19 @@ document.getElementById("form").onsubmit = async function(e) {
 
     riskContainer.style.display = "block";
 
-    riskBar.style.width = riskPercent + "%";
+riskBar.style.width = riskPercent + "%";
 
-    let riskColor;
+let riskColor;
 
-    if (result.risk_probability < 0.3)
-        riskColor = "#4CAF50";
-    else if (result.risk_probability < 0.6)
-        riskColor = "#ff9800";
-    else
-        riskColor = "#f44336";
+if (result.risk_probability < 0.3)
+    riskColor = "#4CAF50";
+else if (result.risk_probability < 0.6)
+    riskColor = "#ff9800";
+else
+    riskColor = "#f44336";
 
+riskBar.style.background = riskColor;
+    
     riskText.innerText =
         riskPercent.toFixed(1) + "% Risk Probability";
     // SHAP DISPLAY
