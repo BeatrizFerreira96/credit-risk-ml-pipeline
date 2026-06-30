@@ -151,7 +151,31 @@ button:hover {
 .recommendation-low {
     border-left: 6px solid #4CAF50;
 }
+.shap-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 20px;
+}
 
+.factor-card {
+    padding: 20px;
+    border-radius: 12px;
+}
+
+.risk-up {
+    background: #fff5f5;
+    border-left: 5px solid #f44336;
+}
+
+.risk-down {
+    background: #f1fff4;
+    border-left: 5px solid #4CAF50;
+}
+
+.factor-card ul {
+    padding-left: 20px;
+}
 </style>
 </head>
 
@@ -288,6 +312,16 @@ button:hover {
 
 <div id="explanations"></div>
 <canvas id="shapChart"></canvas>
+<p style="
+    text-align:center;
+    color:#666;
+    font-size:14px;
+    margin-top:10px;
+">
+    Positive values increase predicted credit risk.
+    Negative values reduce predicted credit risk.
+</p>
+
 <div id="recommendationBox"></div>
 </div>
 
@@ -475,7 +509,7 @@ else
     "cat__checking_status_A14": "No Checking Account",
 
     // CREDIT HISTORY
-    "cat__credit_history_A30": "No Credit History",
+    "cat__credit_history_A30": "Credit History",
     "cat__credit_history_A31": "All Credits Paid",
     "cat__credit_history_A32": "Existing Credits Paid",
     "cat__credit_history_A33": "Past Payment Delays",
@@ -507,12 +541,61 @@ else
 .filter(([feature]) => allowedFeatures.includes(feature))
         .sort((a, b) => Math.abs(b[1]) - Math.abs(a[1]))
         .slice(0, 5);
+    const riskUp =
+        sortedFeatures.filter(([_, value]) => value > 0);
 
-    let html = `
-        <div class="shap-box">
-            <h3>Top Factors Affecting Prediction</h3>
-            <ul>
+    const riskDown =
+        sortedFeatures.filter(([_, value]) => value < 0);
+   
+        let html = `
+<div class="shap-columns">
+
+<div class="factor-card risk-up">
+<h3>⬆ Risk Increasing Factors</h3>
+<ul>
+`;
+
+riskUp.forEach(([feature,value]) => {
+
+    const cleanName =
+        featureNames[feature] || feature;
+
+    html += `
+        <li>
+            <strong>${cleanName}</strong>
+            (${value.toFixed(3)})
+        </li>
     `;
+});
+
+html += `
+</ul>
+</div>
+
+<div class="factor-card risk-down">
+<h3>⬇ Risk Reducing Factors</h3>
+<ul>
+`;
+
+riskDown.forEach(([feature,value]) => {
+
+    const cleanName =
+        featureNames[feature] || feature;
+
+    html += `
+        <li>
+            <strong>${cleanName}</strong>
+            (${value.toFixed(3)})
+        </li>
+    `;
+});
+
+html += `
+</ul>
+</div>
+
+</div>
+`;
 
     for (const [feature, value] of sortedFeatures) {
 
@@ -583,7 +666,7 @@ window.shapChartInstance = new Chart(ctx, {
 
             title: {
                 display: true,
-                text: "Top Risk Drivers",
+                text: "Key Factors Influencing Credit Risk",
                 font: {
                     size: 18
                 }
