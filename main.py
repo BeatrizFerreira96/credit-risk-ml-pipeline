@@ -91,12 +91,18 @@ def predict(customer: InputData):
         for name, value in zip(feature_names, shap_values.values[0]):
             feature_importance[name] = round(float(value), 3)
         
-        confidence = max(prob)
+        proba = model.named_steps["classifier"].predict_proba(processed_data)[0]
+
+        pred = model.named_steps["classifier"].predict(processed_data)[0]
+
+        prob = proba[1]
+
+        confidence = max(proba)
+        
         return {
     "prediction": "high risk" if pred == 1 else "low risk",
     "risk_probability": round(float(prob), 3),
-    "confidence": round(float(prob if pred == 1 else 1 - prob), 3),
-    "confidence": float(confidence),
+    "confidence": round(float(confidence), 3),
     "shap_values": feature_importance
     }
 
