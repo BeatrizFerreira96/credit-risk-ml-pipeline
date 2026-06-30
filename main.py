@@ -19,7 +19,7 @@ app.add_middleware(
 )
 
 # load model
-model = joblib.load("src/model.pkl")
+model = joblib.load("model/model.pkl")
 print(model.named_steps)
 
 

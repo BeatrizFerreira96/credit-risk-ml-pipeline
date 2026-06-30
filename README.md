@@ -195,17 +195,17 @@ credit-risk-ml-pipeline/
 
 ## Application Screenshots
 
-### High Risk Prediction
-
-![High Risk](screenshots/high-risk.png)
-
 ### Low Risk Prediction
 
 ![Low Risk](screenshots/low-risk.png)
 
+### High Risk Prediction
+
+![High Risk](screenshots/high-risk.png)
+
 ### Explainable AI Dashboard
 
-![Dashboard](screenshots/dashboard.png)
+![Dashboard](screenshots/shap.png)
 
 ---
 
