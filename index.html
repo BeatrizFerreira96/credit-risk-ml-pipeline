@@ -133,6 +133,25 @@ button:hover {
     }
 }
 
+.recommendation-box {
+    margin-top: 25px;
+    padding: 20px;
+    border-radius: 12px;
+    background: #f8f8f8;
+}
+
+.recommendation-box h3 {
+    margin-top: 0;
+}
+
+.recommendation-high {
+    border-left: 6px solid #f44336;
+}
+
+.recommendation-low {
+    border-left: 6px solid #4CAF50;
+}
+
 </style>
 </head>
 
@@ -269,6 +288,7 @@ button:hover {
 
 <div id="explanations"></div>
 <canvas id="shapChart"></canvas>
+<div id="recommendationBox"></div>
 </div>
 
 <script>
@@ -365,7 +385,33 @@ riskBar.style.background = riskColor;
         riskPercent.toFixed(1) + "% Risk Probability";
     // SHAP DISPLAY
 
-    let recommendation;
+    let recommendationTitle;
+let recommendationText;
+
+if (result.risk_probability > 0.6)
+{
+    recommendationTitle =
+        "⚠ Manual Review Recommended";
+
+    recommendationText =
+        "Applicant presents elevated credit risk. Review income stability, savings level and repayment capacity before approval.";
+}
+else if (result.risk_probability > 0.3)
+{
+    recommendationTitle =
+        "🟡 Moderate Risk";
+
+    recommendationText =
+        "Applicant may be approved with additional verification of financial status.";
+}
+else
+{
+    recommendationTitle =
+        "✅ Low Risk Applicant";
+
+    recommendationText =
+        "Applicant appears suitable for standard approval procedures.";
+}
 
     if(result.risk_probability > 0.6)
     {
@@ -515,6 +561,7 @@ const ctx = document
 window.shapChartInstance = new Chart(ctx, {
     type: "bar",
     indexAxis: "y",
+
     data: {
         labels: labels,
         datasets: [{
@@ -528,13 +575,25 @@ window.shapChartInstance = new Chart(ctx, {
             borderWidth: 1
         }]
     },
+
     options: {
         responsive: true,
+
         plugins: {
+
+            title: {
+                display: true,
+                text: "Top Risk Drivers",
+                font: {
+                    size: 18
+                }
+            },
+
             legend: {
                 display: false
             }
         },
+
         scales: {
             y: {
                 beginAtZero: true
@@ -543,6 +602,21 @@ window.shapChartInstance = new Chart(ctx, {
     }
 });
 
+
+    const recommendationBox =
+        document.getElementById("recommendationBox");
+
+    recommendationBox.className =
+        "recommendation-box " +
+    (result.risk_probability > 0.6
+        ? "recommendation-high"
+        : "recommendation-low");
+
+    recommendationBox.innerHTML = `
+        <h3>${recommendationTitle}</h3>
+
+        <p>${recommendationText}</p>
+`;
 button.disabled = false;
         button.innerText = "Predict";
         loadingDiv.style.display = "none";
